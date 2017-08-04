@@ -25,7 +25,8 @@ The next section below will explain how these challenges are addressed in the de
 
 # ML Pipeline
 ML pipeline for this project is presented in the diagram below
-_**Diagram to be provided**_
+
+[[logical_workflow.png]]
 
 # Files in This Repo 
 You will find the following files and folders in this repo
