@@ -176,7 +176,6 @@ _ensemble.R_ will rely on the configuration settings in _config.R_ on the condit
 This script can be launched from a command line with the command as follows
 
 `Rscript --vanilla code/ensemble.R "Str1" code/config.R`
-`Rscript --vanilla code/ensemble.R data/ensemble_submission.csv code/config.R`
 
 Where
 - _Str1_ - output file name for the result submission csv file (in a ready-for-Kaggle-upload format)
