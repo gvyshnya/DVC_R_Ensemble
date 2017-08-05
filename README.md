@@ -27,7 +27,7 @@ The next section below will explain how these challenges are addressed in the de
 # ML Pipeline
 ML pipeline for this project is presented in the diagram below
 
-[[https://github.com/gvyshnya/DVC_R_Ensemble/blob/master/logical_workflow.png]]
+[https://github.com/gvyshnya/DVC_R_Ensemble/blob/master/logical_workflow.png]
 
 As you can see, the essential implementation of the solution is as follows
 - _preprocessing.R_ handles all aspects of data manipulations and pre-processing (reading training and testing data sets, removing outliers, imputing NAs etc.) as well as storing refined training and testing set data as files to reuse by model scripts
