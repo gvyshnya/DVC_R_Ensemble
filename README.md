@@ -78,11 +78,11 @@ This script can be launched from a command line with the command as follows
 `Rscript --vanilla code/pre-processing.R "Str1" "Str2" "Str4" "Str4"`
 
 Where
-# 4 arguments are required 
-# _Str1_ - input file name for raw traing data csv (by default, the DVC pipeline script will download it to 'data/wine.csv' - see below)
-# _Str2_ - input file name for raw testing data csv (by default, the DVC pipeline script will download it to 'data/wine_test.csv' - see below)
-# _Str3_ - output file name for imputed training data csv (for example, 'data/train_imputed.csv')
-# _Str4_ - output file name for imputed testing data csv (for example, 'data/test_imputed.csv')
+
+- _Str1_ - input file name for raw traing data csv (by default, the DVC pipeline script will download it to 'data/wine.csv' - see below)
+- _Str2_ - input file name for raw testing data csv (by default, the DVC pipeline script will download it to 'data/wine_test.csv' - see below)
+- _Str3_ - output file name for imputed training data csv (for example, 'data/train_imputed.csv')
+- _Str4_ - output file name for imputed testing data csv (for example, 'data/test_imputed.csv')
 
 ### LR.R
 This file implements the following capabilities
@@ -119,10 +119,8 @@ This file implements the following capabilities
 This script can be launched from a command line with the command as follows
 
 `Rscript --vanilla code/GBM.R "Str1" "Str2" "Int1" "Int2" "Int3" "Int4" "Str3" code/config.R`
-Rscript --vanilla code/GBM.R data/train_imputed.csv data/test_imputed.csv 5000 5 4 25 output/submission_gbm.csv code/config.R
 
 Where
- 
 - _Str1_ - input file name for imputed training data csv (for example, 'data/train_imputed.csv' - it should be located where preprocessing.R output it)
 - _Str2_ - input file name for imputed testing data csv (for example, 'data/test_imputed.csv' - it should be located where preprocessing.R output it)
 - _Int1_ - number of trees to generate in GBM search (integer)
@@ -147,13 +145,25 @@ This file implements the following capabilities
 - Output the prediction results as a Kaggle submission file of a format specified by the requirements to the completion per https://inclass.kaggle.com/c/pred-411-2016-04-u3-wine/
 
 This script can be launched from a command line with the command as follows
-_**Script command to be inserted**_
+
+`Rscript --vanilla code/xgboost.R data/train_imputed.csv data/test_imputed.csv 10 2 0.0001 1 data/xgboost_submission.csv code/config.R`
+
+Where
+- _Str1_ - input file name for imputed training data csv (for example, 'data/train_imputed.csv' - it should be located where preprocessing.R output it)
+- _Str2_ - input file name for imputed testing data csv (for example, 'data/test_imputed.csv' - it should be located where preprocessing.R output it)
+- _Int1_ - number of rounds in the xgboost search (integer)
+- _Int2_ - depth of search (integer)
+- _Float1_ - alpha, one of the linear booster-specific parameters (float)
+- _Float2_ - lambda, one of the linear boster-specific parameters (float)
+- _Str3_ - output file name for the result submission csv file (in a ready-for-Kaggle-upload format), for example 'output/submission_xgboost.csv'
+- the last parameter is the configuration file of the solution implemented as an R script (this is 'code/config.R' by default)
 
 **Notes:**
  
 - Training and predictions are performed in “cluster-then-predict” framework since the observations in both the training and testing sets allow for clear clustering the data by a meaningful business factor (wines starred by experts and wines not starred by any of the experts)
 - Cross-validation efforts had been taken to tune the parameters of xgboost model itself as well as to prove cluster-then-predict setup yields better prediction accuracy vs. using the entire training and testing sets (however, the cross-validation scripts are not the parts of ML pipeline directly, and thus they are not the part of this repo)
 - Please refer below as for manual editing config.R to tweak the run-time parameters for the ML solution/pipeline
+- Please review http://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html for more details on xgboost-specific parameters
 
 ### ensemble.R
 This script will utilize individual predictions saved by individual MLs in this project (LR, GBM, xgboost) to prepare ensemble submissions in a format of a Kaggle Submission file specified in requirements to https://inclass.kaggle.com/c/pred-411-2016-04-u3-wine/
