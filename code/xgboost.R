@@ -4,8 +4,9 @@
 # - predition on the imputed testing set, using the fitted xgboost model 
 # - preparation of a Kaggle submission file 
 # It is intended to run from a command line in a batch mode, using the Rscript command below: 
-# Rscript --vanilla code/xgboost.R data/train_imputed.csv data/test_imputed.csv 10 2 0.0001 1 data/xgboost_submission.csv
-# 7 arguments are required 
+# Rscript --vanilla code/xgboost.R data/train_imputed.csv data/test_imputed.csv 10 2 0.0001 1 data/xgboost_submission.csv code/config.R
+#
+# 8 arguments are required 
 # - input file name for imputed training data csv,
 # - input file name for imputed testing data csv
 # - nrounds - number of rounds in the xgboost search (integer)
@@ -13,6 +14,7 @@
 # - alpha  - one of the linear booster-specific parameters (float)
 # - lambda - one of the linear boster-specific parameters (float)
 # - output file name for the result submission csv file (in a ready-for-Kaggle-upload format)
+# - the configuration file of the solution in a format of R script module (please use config.R provided)
 #
 # Note: please refer to http://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html or other
 #       links in the comments below for more details on xgboost parameters
@@ -26,11 +28,12 @@ library(xgboost)
 strt<-Sys.time()
 
 args = commandArgs(trailingOnly=TRUE)
-if (!length(args)==7) {
+if (!length(args) == 8) {
   stop("Seven arguments must be supplied (input file name for inputed traing data csv,
         input file name for imputed testing data csv, 
        split ration value (0..1), seed value,
-       output file name for Kaggle result submission csv)", call.=FALSE)
+       output file name for Kaggle result submission csv,
+       solution configuration file 'code/config.R')", call.=FALSE)
 }
 
 fname_training_set <- args[1]
@@ -40,6 +43,9 @@ n.depth <- args[4]
 n.alpha <- args[5]
 n.lambda <- args[6]
 fname_kaggle_submission <- args[7]
+fname_config <- args[8]
+
+source(fname_config) # import the config file as R source as it is the R source code indeed
 
 # regression modeller - xgboost
 # ref.: http://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html

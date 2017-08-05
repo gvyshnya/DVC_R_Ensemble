@@ -4,9 +4,10 @@
 # - predition on the imputed testing set, using the fitted GBM model (for regression problem, 
 #   gaussian distribution used in GBM)
 # - preparation of a Kaggle submission file 
-# It is intended to run from a command line in a batch mode, using the Rscript command below: 
-# Rscript --vanilla code/GBM.R data/train_imputed.csv data/test_imputed.csv 0.7 826 data/submission.csv
-# 7 arguments are required 
+# It is intended to run from a command line in a batch mode, using the Rscript command like one below: 
+# Rscript --vanilla code/GBM.R data/train_imputed.csv data/test_imputed.csv 5000 5 4 25 output/submission.csv code/config.R
+#
+# 8 arguments are required 
 # - input file name for imputed training data csv,
 # - input file name for imputed testing data csv
 # - number of trees to generate in GBM search (integer)
@@ -14,6 +15,7 @@
 # - number of folds in the internal GBM cross-validation (integer)
 # - minimum number of observations in a bucket in order to make another tree split in GBM search (integer)
 # - output file name for the result submission csv file (in a ready-for-Kaggle-upload format)
+# - the configuration file of the solution implemented as an R script (this is 'code/config.R' by default)
 # 
 # Note: please refer to http://www.inside-r.org/packages/cran/gbm/docs/gbm for more details
 #       on each of the GBM-specific int parameters above
@@ -27,11 +29,12 @@ library(gbm)
 strt<-Sys.time()
 
 args = commandArgs(trailingOnly=TRUE)
-if (!length(args)==7) {
-  stop("Seven arguments must be supplied (input file name for inputed traing data csv,
+if (!length(args)==8) {
+  stop("Eight arguments must be supplied (input file name for inputed traing data csv,
         input file name for imputed testing data csv, 
-       split ration value (0..1), seed value,
-       output file name for Kaggle result submission csv)", call.=FALSE)
+        split ration value (0..1), seed value,
+        output file name for Kaggle result submission csv,
+        solution configuration file 'code/config.R')", call.=FALSE)
 }
 
 fname_training_set <- args[1]
@@ -41,6 +44,9 @@ n.depth <- args[4]
 n.folds <- args[5]
 n.minobservationbucket <- args[6]
 fname_kaggle_submission <- args[7]
+fname_config <- args[8]
+
+source(fname_config) # import the config file as R source as it is the R source code indeed
 
 # regression modeller - GBM
 # ref.: http://www.inside-r.org/packages/cran/gbm/docs/gbm

@@ -3,15 +3,15 @@
 # - ensemble prediction based on 3 models fitted (LR, GBM, and xgboost)
 # - preparation of a Kaggle submission file for the ensemble prediction 
 # It is intended to run from a command line in a batch mode, using the Rscript command below: 
-# Rscript --vanilla code/ensemble.R code/config.R data/ensemble_submission.csv
-# 2 arguments are required 
-# - input configuration file in R (setup of the ensemble implemented as R code module), which has to have
+# Rscript --vanilla code/ensemble.R data/ensemble_submission.csv code/config.R
+#
+# 2 arguments are required
+# - output file name for the result submission csv file (in a ready-for-Kaggle-upload format)
+# - configuration file in R (setup of the ensemble implemented as R code module), which has to have
 #   the following variables assigned properly
 #   - run_ensemble <- 1 # if set to 0, the ensemble will not predict
 #   - model_predictions <- ["data/somefile.csv", "data/somefile2.csv", "data/somefile2.csv"]
 #   - n.models <- 3 # or any valid number matching the number of actual model predictions in the ensemble
-
-# - output file name for the result submission csv file (in a ready-for-Kaggle-upload format)
 
 strt<-Sys.time()
 

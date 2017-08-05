@@ -146,7 +146,7 @@ This file implements the following capabilities
 
 This script can be launched from a command line with the command as follows
 
-`Rscript --vanilla code/xgboost.R data/train_imputed.csv data/test_imputed.csv 10 2 0.0001 1 data/xgboost_submission.csv code/config.R`
+`Rscript --vanilla code/GBM.R "Str1" "Str2" "Int1" "Int2" "Float1" "Float2" "Str3" code/config.R`
 
 Where
 - _Str1_ - input file name for imputed training data csv (for example, 'data/train_imputed.csv' - it should be located where preprocessing.R output it)
@@ -174,7 +174,13 @@ _ensemble.R_ will rely on the configuration settings in _config.R_ on the condit
 - Specifying weights of every model prediction in the ensemble
 
 This script can be launched from a command line with the command as follows
-_**Script command to be inserted**_
+
+`Rscript --vanilla code/ensemble.R "Str1" code/config.R`
+`Rscript --vanilla code/ensemble.R data/ensemble_submission.csv code/config.R`
+
+Where
+- _Str1_ - output file name for the result submission csv file (in a ready-for-Kaggle-upload format)
+- configuration file in R (setup of the ensemble implemented as R code module) - the default version provided in _code/config.R_
 
 ### config.R
 This file is not intended to run from a command line (unlike the rest of the R scripts in the project).
