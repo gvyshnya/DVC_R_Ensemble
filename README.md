@@ -103,7 +103,7 @@ Where
 - _Str3_ – relative path to the result submission csv file (in a ready-for-Kaggle-upload format); recommended value is "_data/submission_LR.csv_"
 - _code/config.R_ - the configuration file of the solution in a format of R script module (please use _config.R_ provided)
 
-Notes: 
+**Notes:** 
 - Training and predictions are performed in "cluster-then-predict" framework since the observations in both the training and testing sets allow for clear clustering the data by a meaningful business factor (wines starred by experts and wines not starred by any of the experts)
 - Cross-validation efforts had been taken to tune the parameters of LR model itself as well as to prove cluster-then-predict setup yields better prediction accuracy vs. using the entire training and testing sets (however, the cross-validation scripts are not the parts of ML pipeline directly, and thus they are not the part of this repo)
 - Please make sure to specify the same name of the relative path to the result submission csv file for LR model in the ensemble setup section of _config.R_
