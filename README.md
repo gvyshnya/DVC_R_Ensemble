@@ -186,5 +186,5 @@ This file is not intended to run from a command line (unlike the rest of the R s
 It is de-facto a configuration file for entire solution (although the configuration itself is specified as R statements/variable assignments). This file is included as a source file to all of the other R scripts mentioned above. Thus the respective parameters (assigned as R variables) will be retrieved by the runnable scripts, and the conditional logic there will be triggered respectively.
 
 ## DVC Batch File
-TBD
+This file is used to run the machine-learning pipeline for this project, using cabapilities of DVC (https://dataversioncontrol.com/)
 
