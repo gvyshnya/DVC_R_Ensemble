@@ -26,19 +26,50 @@ fname_kaggle_submission <- args[2]
 
 source(fname_config)
 
-# for simplicity, ensemble will assign equal weights to each of the individual model predictions
-# FIXME
-prediction <- (p1_1 + p1_2 + p1_3)/n.models 
+# get ensemble components as defined in fname_config module
+predictions <- c()
+tIndex <- NULL # this is the vector of indexes of records in the test set - the same across all of the prediction files
+for (prediction_fname in cfg_model_predictions) {
+  df <- read.csv(prediction_fname)
+  if (is.null(tIndex)) {
+    # read Indexes of records in the training
+    tIndex <- df$INDEX
+  }
+  pred <- df$P_TARGET  # this is specific to a particular project we tackle 
+  
+  # append the dataframe with a particular prediction to the vector of dataframes with individual predictions
+  predictions <- c(predictions, pred)
+}
 
-# prepare submission
+#calculate ensemble prediction
+ensemble_prediction <- NULL
+total_weight <- 0
+
+for (i in 1:length(predictions)) {
+  model_weight <- cfg_model_weights[i]
+  model_prediction <- predictions[i]
+  if (is.null(ensemble_prediction)) {
+    # the case of the first model prediction in the ensemble
+    ensemble_prediction <- model_prediction * model_weight
+  }
+  else {
+    ensemble_prediction <- ensemble_prediction + model_prediction * model_weight
+  }
+  total_weight <- total_weight + model_weight
+}
+
+# final ensemble prediction weightened
+ensemble_prediction <- ensemble_prediction/total_weight
+
+# prepare ensemble submission
 print(paste("Prepare ensemble submission file",Sys.time()))
 
 #INDEX,P_TARGET
-MySubmission <- data.frame(INDEX = tIndex, P_TARGET = prediction)
+MySubmission <- data.frame(INDEX = tIndex, P_TARGET = ensemble_prediction)
 
 write.csv(MySubmission, fname_kaggle_submission, row.names=FALSE)
 
-print(paste("Finished data submission",Sys.time()))
+print(paste("Finished creating the ensemble submission",Sys.time()))
 print(paste("Elapsed Time:",(Sys.time() - strt)))
 ##################################################
 # That's all, folks!
