@@ -15,4 +15,4 @@ cfg_run_ensemble <- 1 # if set to 0, the ensemble will not predict, and ensemble
 # ensemble components
 cfg_model_predictions <- c("data/submission_LR.csv", "data/submission_GBM.csv", "data/submission_XGBOOST.csv")
 # element weights mapped to the cfg_model_predictions elements above
-cfg_model_weights <- c(1,1,1) # weights of predictions of the models in the ensemble
+cfg_model_weights <- c(1,3,1) # weights of predictions of the models in the ensemble
