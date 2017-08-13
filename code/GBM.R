@@ -58,7 +58,7 @@ gbmRegressionModeller <- function (df.train, df.test, formula2verify, ntrees,
             data=df.train,               # training dataset
             distribution="gaussian",     # (squared error) - used in regression
             n.trees=ntrees,              # number of trees
-            shrinkage=0.001,             # shrinkage or learning rate,
+            shrinkage=0.002,             # shrinkage or learning rate,
                                          # 0.001 to 0.1 usually work
             interaction.depth=depth,     # 1: additive model, 2: two-way interactions, etc.
             bag.fraction = 0.5,          # subsampling fraction, 0.5 is probably best
