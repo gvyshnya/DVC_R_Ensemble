@@ -9,6 +9,8 @@ DVC is courtesy to Dmitry Petrov who is the principal developer and maintainer o
 
 While working on DVC pipeline for this project, the respective DVC tutorial for R-based projects was used. Such a tutorial (https://blog.dataversioncontrol.com/r-code-and-reproducible-model-development-with-dvc-1507a0e3687b) is courtesy to Marija Ilić.
 
+**Note:** The materials of this repo are used as illustrations/playground in my blog post per https://blog.dataversioncontrol.com/ml-model-ensembling-with-fast-iterations-91e8cad6a9b5 as well.
+
 # Dependencies
 In order to try the materials of this repo in your environment, the following pre-requisites should be installed on your machine
 - Python 3 runtime environment for your OS (it is required to run DVC commands in the batch files)
